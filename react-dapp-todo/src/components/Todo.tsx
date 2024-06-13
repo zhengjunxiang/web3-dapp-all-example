@@ -82,11 +82,11 @@ function Todo() {
       setBalance(amount)
     } catch (error) {
       console.error('error', error)
-      // messageApi.open({
-      //   type: 'error',
-      //   duration: 4,
-      //   content: `读取合约账户余额失败：${(error as BaseError)?.details}`,
-      // })
+      messageApi.open({
+        type: 'error',
+        duration: 4,
+        content: `读取合约账户余额失败：${(error as BaseError)?.details}`,
+      })
     }
   }, [contractAddress])
 
@@ -112,7 +112,6 @@ function Todo() {
             timestamp: item.timestamp.toString(),
           }
         }).sort((a, b) => Number(b.timestamp) - Number(a.timestamp))
-        
         setTodoList(dataSource)
       }
       setLoading(false)
@@ -190,8 +189,6 @@ function Todo() {
     setMsg(e.target.value)
   }
 
-  console.log("address", address, chainId)
-
   useEffect(() => {
     let timer = undefined
     if (isConnected && chainId === 1337) {
@@ -222,7 +219,7 @@ function Todo() {
       {contextHolder}
       <div className="item">
         <span>合约账户余额：<em>{ isConnected ? Number(balance) || '0.0' : '0.0' }</em> { balanceData?.symbol }</span>
-        {/* <Button type="primary" ghost onClick={getBalance}>查询余额</Button> */}
+        <Button type="primary" ghost onClick={getBalance}>查询余额</Button>
         <Button type="primary" onClick={getWithdraw} loading={isWithdraw} disabled={!isConnected}>我要提款</Button>
       </div>
       <div className='item'><span>当前区块高度：{ isConnected ? blockNumber?.toString() || '-' : '-'}</span></div>
@@ -246,19 +243,19 @@ function Todo() {
             交易确认中...
           </Tag>
         </div>
-      )} 
+      )}
       {isConnected && chainId === 1337 && isConfirmed && (
         <div className='item'>
           <Tag icon={<CheckCircleOutlined />} color="success">
             交易已确认
           </Tag>
         </div>
-      )} 
-      {/* {error && ( 
+      )}
+      {error && (
         <div className='item'>
           <span className='error'>错误回调: {(error as BaseError).shortMessage || error.message}</span>
-        </div> 
-      )}  */}
+        </div>
+      )}
       <div className="total">
         <Table loading={loading} columns={columns} dataSource={isConnected && chainId === 1337 ? todoList : []} pagination={{ pageSize: 6, showTotal }} />
       </div>

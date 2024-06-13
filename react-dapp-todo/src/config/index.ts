@@ -16,6 +16,7 @@ import {
   hardhat,
   localhost,
 } from "wagmi/chains";
+
 import {
   metaMaskWallet,
   rainbowWallet,
@@ -33,7 +34,7 @@ import {
 
 export const config = getDefaultConfig({
   appName: "my-app-wallet",
-  projectId: "5e6260fddc2059c2b3d6e697283a05a0",
+  projectId: "428ed73e74f6734023cf4e5232253d90",
   chains: [
     localhost,
     hardhat,
